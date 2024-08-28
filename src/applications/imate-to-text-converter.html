@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Image to Text Converter</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f0f0f0;
+        margin: 0;
+      }
+      .container {
+        text-align: center;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 90%;
+        max-width: 600px;
+      }
+      #output-container {
+        margin-top: 20px;
+      }
+      #image-preview {
+        max-width: 100%;
+        margin-top: 20px;
+      }
+      textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+      #progress-container {
+        margin-top: 20px;
+      }
+      #progress {
+        width: 100%;
+        background-color: #f3f3f3;
+        border-radius: 5px;
+        overflow: hidden;
+        height: 25px;
+      }
+      #progress-bar {
+        height: 100%;
+        width: 0;
+        background-color: #4caf50;
+        text-align: center;
+        color: white;
+        line-height: 25px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Image to Text Converter</h1>
+      <input type="file" id="image-input" accept="image/*" />
+      <button id="convert-btn">Convert to Text</button>
+      <div id="progress-container">
+        <div id="progress">
+          <div id="progress-bar">0%</div>
+        </div>
+      </div>
+      <div id="output-container">
+        <h2>Extracted Text:</h2>
+        <textarea id="output-text" rows="10" cols="50"></textarea>
+        <h2>Uploaded Image:</h2>
+        <img id="image-preview" alt="Image Preview" />
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@2/dist/tesseract.min.js" />
+    <script>
+      document
+        .getElementById("convert-btn")
+        .addEventListener("click", function () {
+          const imageInput = document.getElementById("image-input").files[0];
+          if (imageInput) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+              const img = new Image();
+              img.src = e.target.result;
+              img.onload = function () {
+                // Display the uploaded image
+                document.getElementById("image-preview").src = img.src;
+
+                Tesseract.recognize(img, "eng", {
+                  logger: (m) => {
+                    console.log(m);
+                    if (m.status === "recognizing text") {
+                      const progress = Math.floor(m.progress * 100);
+                      const progressBar =
+                        document.getElementById("progress-bar");
+                      progressBar.style.width = progress + "%";
+                      progressBar.textContent = progress + "%";
+                    }
+                  },
+                }).then(({ data: { text } }) => {
+                  document.getElementById("output-text").value = text;
+                  const progressBar = document.getElementById("progress-bar");
+                  progressBar.style.width = "100%";
+                  progressBar.textContent = "100%";
+                });
+              };
+            };
+            reader.readAsDataURL(imageInput);
+          } else {
+            alert("Please select an image file.");
+          }
+        });
+    </script>
+  </body>
+</html>
