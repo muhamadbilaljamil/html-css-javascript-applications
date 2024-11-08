@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Scrolling Page with Moving Circle</title>
     <style>
-
       * {
         box-sizing: border-box;
       }
@@ -17,14 +16,12 @@
       }
 
       #toc {
-        /* position: fixed;
-        top: 50px;
-        left: 20px;*/
       }
 
       #toc ul {
         list-style: none;
         padding: 0;
+        margin-top: 64px;
       }
 
       #toc li {
@@ -33,7 +30,9 @@
 
       #toc a {
         text-decoration: none;
-        color: #333;
+        color: #64748b;
+        font-size: 12px;
+        font-weight: bold;
       }
 
       #toc a.active {
@@ -43,14 +42,14 @@
 
       #content {
         width: 528px;
-        padding: 20px;
+        padding: 0 20px;
       }
 
       section {
         margin-bottom: 100px;
       }
 
-      .dummy-content {
+      .main-wrapper {
         max-width: 1280px;
         padding: 0 96px;
         margin: 0 auto;
@@ -61,11 +60,10 @@
         position: relative;
       }
 
-      .dummy-content .profile {
+      .main-wrapper .profile-section {
         width: 528px;
+        padding: 96px 0;
         display: flex;
-        justify-content: center;
-        align-items: center;
         flex-direction: column;
         position: sticky;
         top: 0;
@@ -74,11 +72,29 @@
         /* background-color: #f0f0f0; */
         color: #94a3b8;
       }
+      .main-wrapper .profile-section .name {
+        color: #e2e8f0;
+        margin: 0;
+        font-size: 40px;
+        font-weight: 700;
+      }
 
-      .dummy-content .description {
+      .main-wrapper .profile-section .designation {
+        color: #e2e8f0;
+        margin: 8px 0 0;
+        font-size: 20px;
+        font-weight: 500;
+      }
+
+      .main-wrapper .profile-section .detail {
+        max-width: 320px;
+        line-height: 20px;
+      }
+
+      .main-wrapper .description {
         width: 528px;
+        padding: 96px 0;
         /* Adjust as needed */
-        padding-left: 20px;
         overflow: auto;
 
         /* Allow scrolling in this section */
@@ -99,14 +115,18 @@
   </head>
 
   <body>
-    <div class="dummy-content">
-      <div class="profile">
-        <h4>Profile</h4>
+    <div class="main-wrapper">
+      <div class="profile-section">
+        <h4 class="name">Muhammad Bilal Jamil</h4>
+        <h6 class="designation">Full Stack Engineer</h6>
+        <p class="detail">
+          I build pixel-perfect, engaging, and accessible digital experiences.
+        </p>
         <nav id="toc">
           <ul>
-            <li><a href="#section1">Section 1</a></li>
-            <li><a href="#section2">Section 2</a></li>
-            <li><a href="#section3">Section 3</a></li>
+            <li><a href="#section1">ABOUT</a></li>
+            <li><a href="#section2">EXPERIENCE</a></li>
+            <li><a href="#section3">PROJECTS</a></li>
           </ul>
         </nav>
       </div>
